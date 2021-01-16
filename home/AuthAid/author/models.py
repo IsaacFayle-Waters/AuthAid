@@ -14,6 +14,15 @@ class World(models.Model):
     def __str__(self):
         return self.name
 
+    """def search_ngi(self):
+        ngi = NarrativeGeneralInfo.objects.filter(world=self.id)
+        return ngi"""
+
+    def search_general(self,Target):
+
+        search = Target.objects.filter(world=self.id)
+        return search
+
 #An individual Narrative, i.e. a single novel, within the World.
 class NarrativeGeneralInfo(models.Model):
     title = models.CharField(max_length=name_length,default='')
@@ -42,6 +51,7 @@ class Scene(models.Model):
     description = models.CharField(max_length=description_length, default='')
     notes = notes_all
     chapter = models.ForeignKey(Chapter,on_delete=models.CASCADE)
+    ngi = models.ForeignKey(NarrativeGeneralInfo, on_delete=models.CASCADE)
 
     time_and_or_date = models.CharField(max_length=100)
 
