@@ -60,9 +60,9 @@ class Scene(models.Model):
     notes = notes_all
     time_and_or_date = models.CharField(max_length=100, default='')
 
-    chapter = models.ForeignKey(Chapter,on_delete=models.CASCADE, default='')
+    chapter = models.ForeignKey(Chapter,on_delete=models.CASCADE, null=True)
     ngi = models.ForeignKey(NarrativeGeneralInfo, on_delete=models.CASCADE, null=True)
-    world = models.ForeignKey(World, on_delete=models.CASCADE, default='')
+    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.description
@@ -74,6 +74,7 @@ class Character(models.Model):
     notes = notes_all
 
     world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
+    #TODO: Make sure many to many class works and is actually appropriate.
     scenes = models.ManyToManyField(Scene)
     chapters = models.ManyToManyField(Chapter)
 
