@@ -39,7 +39,7 @@ class NarrativeGeneralInfo(models.Model):
 
     setting = models.CharField(max_length=2000, default='')
     genre = models.CharField(max_length=200, default='')
-    world = models.ForeignKey(World,on_delete=models.CASCADE, default='')
+    world = models.ForeignKey(World,on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
@@ -48,7 +48,7 @@ class Chapter(models.Model):
     title = models.CharField(max_length=name_length,default='')
     description = models.CharField(max_length=description_length,default='')
     notes = notes_all
-    ngi = models.ForeignKey(NarrativeGeneralInfo,on_delete=models.CASCADE)
+    ngi = models.ForeignKey(NarrativeGeneralInfo,on_delete=models.CASCADE, null=True)
     #TODO: DECIDE HOW TO HANDLE CHAPTER NUMBERS
     chapter_number = models.IntegerField(default=0)
 
@@ -61,7 +61,7 @@ class Scene(models.Model):
     time_and_or_date = models.CharField(max_length=100, default='')
 
     chapter = models.ForeignKey(Chapter,on_delete=models.CASCADE, default='')
-    ngi = models.ForeignKey(NarrativeGeneralInfo, on_delete=models.CASCADE, default='')
+    ngi = models.ForeignKey(NarrativeGeneralInfo, on_delete=models.CASCADE, null=True)
     world = models.ForeignKey(World, on_delete=models.CASCADE, default='')
 
     def __str__(self):
@@ -69,6 +69,7 @@ class Scene(models.Model):
 
 class Character(models.Model):
     name = models.CharField(max_length=name_length, default='')
+    surname = models.CharField(max_length=name_length, default='')
     description = models.CharField(max_length=description_length, default='')
     notes = notes_all
 
@@ -90,7 +91,7 @@ class Location(models.Model):
     description = models.CharField(max_length=description_length, default='')
     notes = notes_all
 
-    world = models.ForeignKey(World, on_delete=models.CASCADE, default='')
+    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
     scenes = models.ManyToManyField(Scene)
     chapters = models.ManyToManyField(Chapter)
 
