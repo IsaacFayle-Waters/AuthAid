@@ -1,5 +1,6 @@
 from django.db import models
 
+#These don't work with sqlite3?
 name_length = 500
 description_length = 2000
 notes_all = models.TextField(default='')
@@ -14,8 +15,8 @@ def search_ass(Target, **kwargs):
 
 #Basically a project. Allows several 'novels'(ngi's) set in one world/universe.
 class World(models.Model):
-    name = models.CharField(max_length=name_length)
-    description = models.CharField(max_length=description_length)
+    name = models.CharField(max_length=name_length, default='')
+    description = models.CharField(max_length=description_length, default='')
     notes = notes_all
 
     def __str__(self):
@@ -72,16 +73,17 @@ class Character(models.Model):
     surname = models.CharField(max_length=name_length, default='')
     description = models.CharField(max_length=description_length, default='')
     notes = notes_all
+    age = models.IntegerField(default=0)
+    gender = models.CharField(max_length=30, default='')
+    motive = models.CharField(max_length=50, default='')
 
     world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
     #TODO: Make sure many to many class works and is actually appropriate.
     scenes = models.ManyToManyField(Scene)
     chapters = models.ManyToManyField(Chapter)
 
-    age = models.IntegerField(default=0)
-    gender = models.CharField(max_length=30, default='')
-    motive = models.CharField(max_length=50, default='')
     #Basic relationships between characters, in this case whether they know each other
+    #c1.acquaintances.add(c2)
     acquaintances = models.ManyToManyField('self',related_name='persons_known')
 
     def __str__(self):
