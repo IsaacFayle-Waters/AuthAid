@@ -50,6 +50,7 @@ class Chapter(models.Model):
     description = models.CharField(max_length=description_length,default='')
     notes = notes_all
     ngi = models.ForeignKey(NarrativeGeneralInfo,on_delete=models.CASCADE, null=True)
+    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
     #TODO: DECIDE HOW TO HANDLE CHAPTER NUMBERS
     chapter_number = models.IntegerField(default=0)
 
