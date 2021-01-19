@@ -13,7 +13,7 @@ class IndexView(generic.ListView):
 class WorldView(generic.ListView):
     pass
 
-class NgiView(generic.ListView):
+class NarrativeGeneralInfoView(generic.ListView):
     pass
 
 class ChapterView(generic.ListView):
