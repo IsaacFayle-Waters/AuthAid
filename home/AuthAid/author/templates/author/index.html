@@ -5,20 +5,10 @@
     <title>.authAid</title>
 </head>
 <body>
+<h3>.authAid</h3>
+<h2>.World</h2>
 
-
-    {% if world_list %}
-        <ul>
-            {% for world in world_list %}
-                <li>
-                    <h1>{{world.name}}</h1> <br>  <h3>{{world.description}}</h3> <br> {{world.notes}} <br>
-
-                </li>
-            {% endfor %}
-
-
-        </ul>
-    {% endif %}
-
+<iframe src=" {%url 'author:world' %}" title="World" height="300" frameborder="0"></iframe>
+<iframe src=" {%url 'author:narrativegeneralinfo' %}" title="NarrativeGeneralInfo" height="300" frameborder="white"></iframe>
 </body>
 </html>

@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>World</title>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
 </head>
-<body>
-
+<h2>.World</h2>
+    {% if world_list %}
+            {% for world in world_list %}
+<h3>{{world.name}}</h3><b>Description:</b> {{world.description}}<br><b>Notes:</b> {{world.notes}}</br>
+            {% endfor %}
+    {% endif %}
 </body>
 </html>
