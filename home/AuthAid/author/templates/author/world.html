@@ -9,7 +9,9 @@
 <h2>.World</h2>
     {% if world_list %}
             {% for world in world_list %}
-<h3>{{world.name}}</h3><b>Description:</b> {{world.description}}<br><b>Notes:</b> {{world.notes}}</br>
+                <h3>{{world.name}}</h3>
+                <b>Description:</b> {{world.description}}<br>
+                <b>Notes:</b> {{world.notes}}</br>
             {% endfor %}
     {% endif %}
 </body>

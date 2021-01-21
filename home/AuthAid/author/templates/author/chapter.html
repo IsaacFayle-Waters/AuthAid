@@ -5,6 +5,19 @@
     <title>Chapter</title>
 </head>
 <body>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
+<h2>.Chapter</h2>
+
+{%if chapter_list%}
+    {%for chapter in chapter_list%}
+        <h3>{{chapter.title}}</h3>
+        <b>Description:</b> {{chapter.description}}<br>
+        <b>Narrative: </b> {{chapter.ngi}}<br>
+        <b>World: </b> {{chapter.world}}<br>
+        <b>Notes:</b> {{chapter.notes}}<br>
+    {%endfor%}
+{%endif%}
 
 </body>
 </html>

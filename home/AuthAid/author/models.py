@@ -3,7 +3,7 @@ from django.db import models
 #These don't work with sqlite3?
 name_length = 500
 description_length = 2000
-notes_all = models.TextField(default='')
+notes_all = models.TextField(default='',blank=True)
 
 """Search for assignments of an instance of a class in instances of other classes.
 #EXAMPLE OF USAGE:
@@ -15,42 +15,32 @@ def search_ass(Target, **kwargs):
 
 #Basically a project. Allows several 'novels'(ngi's) set in one world/universe.
 class World(models.Model):
-    name = models.CharField(max_length=name_length, default='')
-    description = models.CharField(max_length=description_length, default='')
+    name = models.CharField(max_length=name_length, default='',blank=True)
+    description = models.CharField(max_length=description_length, default='',blank=True)
     notes = notes_all
 
     def __str__(self):
         return self.name
 
-    """def search_ngi(self):
-        ngi = NarrativeGeneralInfo.objects.filter(world=self.id)
-        return ngi
-    #Search for references to self in instances of other classes, and return list of those instances
-    def search_general(self,Target):
-        return Target.objects.filter(world=self.id)
-    #Works
-    def sergen(self,Target,**kwargs):
-        return Target.objects.filter(**kwargs)"""
-
 #An individual Narrative, i.e. a single novel, within the World.
 class NarrativeGeneralInfo(models.Model):
-    title = models.CharField(max_length=name_length,default='')
-    description = models.CharField(max_length=description_length,default='')
+    title = models.CharField(max_length=name_length,default='',blank=True)
+    description = models.CharField(max_length=description_length,default='',blank=True)
     notes = notes_all
 
-    setting = models.CharField(max_length=2000, default='')
-    genre = models.CharField(max_length=200, default='')
-    world = models.ForeignKey(World,on_delete=models.CASCADE, null=True)
+    setting = models.CharField(max_length=2000, default='',blank=True)
+    genre = models.CharField(max_length=200, default='',blank=True)
+    world = models.ForeignKey(World,on_delete=models.CASCADE, null=True,blank=True)
 
     def __str__(self):
         return self.title
 
 class Chapter(models.Model):
-    title = models.CharField(max_length=name_length,default='')
-    description = models.CharField(max_length=description_length,default='')
+    title = models.CharField(max_length=name_length,default='',blank=True)
+    description = models.CharField(max_length=description_length,default='',blank=True)
     notes = notes_all
-    ngi = models.ForeignKey(NarrativeGeneralInfo,on_delete=models.CASCADE, null=True)
-    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
+    ngi = models.ForeignKey(NarrativeGeneralInfo,on_delete=models.CASCADE, null=True,blank=True)
+    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True,blank=True)
     #TODO: DECIDE HOW TO HANDLE CHAPTER NUMBERS
     chapter_number = models.IntegerField(default=0)
 
@@ -58,46 +48,46 @@ class Chapter(models.Model):
         return self.title
 
 class Scene(models.Model):
-    description = models.CharField(max_length=description_length, default='')
+    description = models.CharField(max_length=description_length, default='',blank=True)
     notes = notes_all
-    time_and_or_date = models.CharField(max_length=100, default='')
+    time_and_or_date = models.CharField(max_length=100, default='',blank=True)
 
-    chapter = models.ForeignKey(Chapter,on_delete=models.CASCADE, null=True)
-    ngi = models.ForeignKey(NarrativeGeneralInfo, on_delete=models.CASCADE, null=True)
-    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
+    chapter = models.ForeignKey(Chapter,on_delete=models.CASCADE, null=True,blank=True)
+    ngi = models.ForeignKey(NarrativeGeneralInfo, on_delete=models.CASCADE, null=True,blank=True)
+    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True,blank=True)
 
     def __str__(self):
         return self.description
 
 class Character(models.Model):
-    name = models.CharField(max_length=name_length, default='')
-    surname = models.CharField(max_length=name_length, default='')
-    description = models.CharField(max_length=description_length, default='')
+    name = models.CharField(max_length=name_length, default='',blank=True)
+    surname = models.CharField(max_length=name_length, default='',blank=True)
+    description = models.CharField(max_length=description_length, default='',blank=True)
     notes = notes_all
     age = models.IntegerField(default=0)
-    gender = models.CharField(max_length=30, default='')
-    motive = models.CharField(max_length=50, default='')
+    gender = models.CharField(max_length=30, default='',blank=True)
+    motive = models.CharField(max_length=50, default='',blank=True)
 
-    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
+    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True,blank=True)
     #TODO: Make sure many to many class works and is actually appropriate.
-    scenes = models.ManyToManyField(Scene)
-    chapters = models.ManyToManyField(Chapter)
+    scenes = models.ManyToManyField(Scene,blank=True)
+    chapters = models.ManyToManyField(Chapter,blank=True)
 
     #Basic relationships between characters, in this case whether they know each other
     #c1.acquaintances.add(c2)
-    acquaintances = models.ManyToManyField('self',related_name='persons_known')
+    acquaintances = models.ManyToManyField('self',related_name='persons_known',blank=True)
 
     def __str__(self):
         return  self.name
 
 class Location(models.Model):
-    name = models.CharField(max_length=name_length, default='')
-    description = models.CharField(max_length=description_length, default='')
+    name = models.CharField(max_length=name_length, default='',blank=True)
+    description = models.CharField(max_length=description_length, default='',blank=True)
     notes = notes_all
 
-    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
-    scenes = models.ManyToManyField(Scene)
-    chapters = models.ManyToManyField(Chapter)
+    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True,blank=True)
+    scenes = models.ManyToManyField(Scene,blank=True)
+    chapters = models.ManyToManyField(Chapter,blank=True)
 
     def __str__(self):
         return self.name

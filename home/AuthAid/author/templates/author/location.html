@@ -5,6 +5,18 @@
     <title>Location</title>
 </head>
 <body>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
+<h2>.Location</h2>
+
+{% if location_list %}
+    {%for location in location_list%}
+        <h3>{{location.name}}</h3>
+        <b>Description:</b>{{location.description}}<br>
+        <b>Notes:</b>{{location.notes}}<br>
+        <b>World: </b>{{location.world}}<br>
+    {%endfor%}
+{%endif%}
 
 </body>
 </html>

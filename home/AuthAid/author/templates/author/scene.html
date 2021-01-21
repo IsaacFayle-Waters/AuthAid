@@ -5,6 +5,21 @@
     <title>Scene</title>
 </head>
 <body>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
+<h2>.Scene</h2>
+
+{%if scene_list%}
+    {%for scene in scene_list%}
+        <h3>{{scene.description}}</h3>
+        <b>When: </b>{{scene.time_and_or_date}}<br>
+        <b>Chapter: </b>{{scene.chapter}}<br>
+        <b>Narrative: </b>{{scene.ngi}}<br>
+        <b>World: </b>{{scene.world }}<br>
+        <b>Notes: </b>{{scene.notes}}<br>
+    {%endfor%}
+
+{%endif%}
 
 </body>
 </html>
