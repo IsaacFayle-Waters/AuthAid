@@ -16,7 +16,7 @@
 {% extends "author/base.html" %}
 {%block content%}
     <div class="sidebar">
-    <h4><a href="#">+Create New</a> </h4>
+    <h4><a href="{% url 'author:world_create'%}">+Create New</a> </h4>
     </div>
     {% if world_list %}
             {% for world in world_list %}
