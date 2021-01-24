@@ -7,13 +7,14 @@
 <body>
 {% extends "author/base.html" %}
 {%block content%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/nonbasestyle.css' %}">
 {%if chapter_list%}
     {%for chapter in chapter_list%}
-        <h3>{{chapter.title}}</h3>
-        <b>Description:</b> {{chapter.description}}<br>
-        <b>Narrative: </b> {{chapter.ngi}}<br>
-        <b>World: </b> {{chapter.world}}<br>
-        <b>Notes:</b> {{chapter.notes}}<br>
+        <div class="sidebar">
+            <h4><a href="{%url 'author:chapter_detail' chapter.pk%}">{{chapter.title}}</a></h4>
+        <h6>(Narrative: {{chapter.ngi}})</h6>
+        </div>
     {%endfor%}
 {%endif%}
 {%endblock%}

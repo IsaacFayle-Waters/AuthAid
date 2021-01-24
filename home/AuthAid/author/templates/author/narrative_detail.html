@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Narrative Details</title>
+</head>
+<body>
+{% extends "author/base.html" %}
+{%block content%}
+<h3>{{ngi.title}}</h3>
+                <b>Setting: </b>{{ngi.setting}}<br>
+                <b>Description:</b>{{ngi.description}}<br>
+                <b>Genre: </b>{{ngi.genre}}<br>
+                <b>World:</b>{{ngi.world}}<br>
+                <b>Notes:</b> {{ngi.notes}}<br>
+{%endblock%}
+
+</body>
+</html>

@@ -7,13 +7,15 @@
 <body>
 {% extends "author/base.html" %}
 {%block content%}
+{%load static%}
+<link rel="stylesheet" type="text/css" href="{% static 'author/nonbasestyle.css' %}">
 
 {% if location_list %}
     {%for location in location_list%}
-        <h3>{{location.name}}</h3>
-        <b>Description:</b>{{location.description}}<br>
-        <b>Notes:</b>{{location.notes}}<br>
-        <b>World: </b>{{location.world}}<br>
+        <div class="sidebar">
+            <h4><a href="{%url 'author:location_detail' location.pk%}" >{{location.name}}</a></h4>
+        <h6>World: {{location.world}}</h6>
+        </div>
     {%endfor%}
 {%endif%}
 {%endblock%}

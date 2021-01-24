@@ -65,3 +65,29 @@ class WorldCreateView(CreateView):
 class WorldDeleteView(DeleteView):
     model = World
     success_url = '/author/world'
+
+'''NarrativeGeneralInfo Views'''
+class NarrativeGeneralInfoDetailView(DetailView):
+    model = NarrativeGeneralInfo
+    template_name = 'author/narrative_detail.html'
+    context_object_name = 'ngi'
+
+'''Chapter views'''
+class ChapterDetailView(DetailView):
+    model = Chapter
+    template_name = 'author/chapter_detail.html'
+
+'''Scene views'''
+class SceneDetailView(DetailView):
+    model = Scene
+    template_name = 'author/scene_detail.html'
+
+'''Character views'''
+class CharacterDetailView(DetailView):
+    model = Character
+    template_name = 'author/character_detail.html'
+
+'''Location views'''
+class LocationDetailView(DetailView):
+    model = Location
+    template_name = 'author/location_detail.html'

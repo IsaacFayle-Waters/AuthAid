@@ -12,8 +12,15 @@ urlpatterns = [
     path('scene/',views.SceneView.as_view(), name='scene'),
     path('character/',views.CharacterView.as_view(), name='character'),
     path('location/',views.LocationView.as_view(),name='location'),
+
     #Detail Views
     path('world/<int:pk>/',views.WorldDetailView.as_view(),name='world_detail'),
+    path('narrativegeneralinfo/<int:pk>/',views.NarrativeGeneralInfoDetailView.as_view(),name='narrative_detail'),
+    path('chapter/<int:pk>/',views.ChapterDetailView.as_view(),name='chapter_detail'),
+    path('scene/<int:pk>/',views.SceneDetailView.as_view(),name='scene_detail'),
+    path('character/<int:pk>/', views.CharacterDetailView.as_view(), name='character_detail'),
+    path('location/<int:pk>/', views.LocationDetailView.as_view(), name='location_detail'),
+
     #Updates
     path('world/<int:pk>',views.WorldUpdateView.as_view(),name='world_update'),
     #Creates

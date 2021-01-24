@@ -7,16 +7,14 @@
 <body>
 {% extends "author/base.html" %}
 {%block content%}
-
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/nonbasestyle.css' %}">
     {% if character_list %}
         {% for character in character_list %}
-             <h3>{{character.name}} {{character.surname}} </h3>
-            <b>Age: </b>{{character.age}}<br>
-            <b>Gender: </b>{{character.gender}}<br>
-            <b>Motive:</b>{{character.motive}}<br>
-            <b>Description:</b>{{character.description}}<br>
-            <b>Notes:</b>{{character.notes}}<br>
-            <b>World: </b>{{character.world}}<br>
+            <div class="sidebar">
+                <h4><a href="{%url 'author:character_detail' character.pk%}" >{{character.name}} {{character.surname}}</a> </h4>
+                <h6>(World: {{character.world}})</h6>
+            </div>
         {% endfor %}
     {% endif %}
 {%endblock%}

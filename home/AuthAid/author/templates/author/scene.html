@@ -7,14 +7,15 @@
 <body>
 {% extends "author/base.html" %}
 {%block content%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/nonbasestyle.css' %}">
 {%if scene_list%}
     {%for scene in scene_list%}
-        <h3>{{scene.description}}</h3>
-        <b>When: </b>{{scene.time_and_or_date}}<br>
-        <b>Chapter: </b>{{scene.chapter}}<br>
-        <b>Narrative: </b>{{scene.ngi}}<br>
-        <b>World: </b>{{scene.world }}<br>
-        <b>Notes: </b>{{scene.notes}}<br>
+        <div class="sidebar">
+        <h4><a href="{%url 'author:scene_detail' scene.pk%}">{{scene.description}}</a></h4>
+        <h6>(Chapter: {{scene.chapter}})</h6>
+        </div>
+
     {%endfor%}
 {%endif%}
 {%endblock%}

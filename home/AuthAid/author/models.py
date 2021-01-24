@@ -22,9 +22,6 @@ class World(models.Model):
     def __str__(self):
         return self.name
 
-    #def get_absolute_url(self):
-    #    return reverse('', kwargs={'pk': self.pk, 'slug':self.name})
-
 #An individual Narrative, i.e. a single novel, within the World.
 class NarrativeGeneralInfo(models.Model):
     title = models.CharField(max_length=name_length,default='',blank=True)

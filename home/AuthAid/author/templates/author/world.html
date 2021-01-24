@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>World</title>
- <style>
- .sidebar{overflow:auto; background-color:Azure; width:fit-content; padding: 3px;border-radius: 0px;margin:left;
- display:block;}
-.sidebar a:link,a:visited {text-decoration: none; color:#2F4F4F;}
-.sidebar a:hover {
-  background-color: #ddd;
-  color: black;}
-</style>
+
 </head>
 <body>
 {% extends "author/base.html" %}
 {%block content%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/nonbasestyle.css' %}">
     <div class="sidebar">
     <h4><a href="{% url 'author:world_create'%}">+Create New</a> </h4>
     </div>

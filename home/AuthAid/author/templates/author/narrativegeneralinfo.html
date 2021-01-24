@@ -6,15 +6,15 @@
 </head>
 <body>
 {% extends "author/base.html" %}
-{% block content %}
+{%block content%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/nonbasestyle.css' %}">
     {% if ngi_list %}
         {% for ngi in ngi_list %}
-            <h3>{{ngi.title}}</h3>
-                <b>Setting: </b>{{ngi.setting}}<br>
-                <b>Description:</b>{{ngi.description}}<br>
-                <b>Genre: </b>{{ngi.genre}}<br>
-                <b>World:</b>{{ngi.world}}<br>
-                <b>Notes:</b> {{ngi.notes}}<br>
+            <div class="sidebar">
+                <h4><a href="{%url 'author:narrative_detail' ngi.pk%}">{{ngi.title}}</a></h4>
+                <h6>(World: {{ngi.world}})</h6>
+            </div>
         {% endfor %}
     {%endif%}
 {%endblock%}

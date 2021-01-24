@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scene Details</title>
+</head>
+<body>
+{% extends "author/base.html" %}
+{%block content%}
+<h3>{{scene.description}}</h3>
+        <b>When: </b>{{scene.time_and_or_date}}<br>
+        <b>Chapter: </b>{{scene.chapter}}<br>
+        <b>Narrative: </b>{{scene.ngi}}<br>
+        <b>World: </b>{{scene.world }}<br>
+        <b>Notes: </b>{{scene.notes}}<br>
+{%endblock%}
+
+</body>
+</html>

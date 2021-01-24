@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Location Details</title>
+</head>
+<body>
+{% extends "author/base.html" %}
+{%block content%}
+{% load static %}
+<h3>{{location.name}}</h3>
+        <b>Description:</b>{{location.description}}<br>
+        <b>Notes:</b>{{location.notes}}<br>
+        <b>World: </b>{{location.world}}<br>
+{%endblock%}
+</body>
+</html>
