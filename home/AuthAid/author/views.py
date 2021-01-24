@@ -56,6 +56,8 @@ class WorldUpdateView(UpdateView):
     model = World
     fields = '__all__'
     template_name = 'author/world_update.html'
+    #slug_url_kwarg = 'update'
+    success_url = '/author/world'
 
 
 

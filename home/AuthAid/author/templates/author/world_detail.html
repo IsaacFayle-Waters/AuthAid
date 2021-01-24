@@ -12,7 +12,7 @@
                 <b>Description:</b> {{world.description}}<br>
                 <b>Notes:</b> {{world.notes}}</br>
 
-                <a href="{% url 'author:world_update' world.id %}">update</a>
+                <a href="{% url 'author:world_update' pk=world.pk %}">update</a>
 {%endblock%}
 
 </body>

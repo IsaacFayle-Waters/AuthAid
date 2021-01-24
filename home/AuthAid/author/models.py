@@ -22,8 +22,8 @@ class World(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('world_update', kwargs={'pk': self.pk})
+    #def get_absolute_url(self):
+    #    return reverse('', kwargs={'pk': self.pk, 'slug':self.name})
 
 #An individual Narrative, i.e. a single novel, within the World.
 class NarrativeGeneralInfo(models.Model):
