@@ -15,7 +15,9 @@ urlpatterns = [
     #Detail Views
     path('world/<int:pk>/',views.WorldDetailView.as_view(),name='world_detail'),
     #Updates
-    path('world/<slug:pk>',views.WorldUpdateView.as_view(),name='world_update'),
+    path('world/<int:pk>',views.WorldUpdateView.as_view(),name='world_update'),
     #Creates
     path('world_create/',views.WorldCreateView.as_view(),name='world_create'),
+    #Deletes
+    path('world_delete/<int:pk>',views.WorldDeleteView.as_view(),name='world_delete'),
 ]

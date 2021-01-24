@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView, ListView,DetailView
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from .models import World, NarrativeGeneralInfo, Chapter, Scene, Character, Location, search_ass
 
 class IndexView(TemplateView):
@@ -50,12 +50,10 @@ class WorldDetailView(DetailView):
     model = World
     template_name = 'author/world_detail.html'
 
-'''Update Views'''
 class WorldUpdateView(UpdateView):
     model = World
     fields = '__all__'
     template_name = 'author/world_update.html'
-    #slug_url_kwarg = 'world.name'
     success_url = '/author/world'
 
 class WorldCreateView(CreateView):
@@ -64,3 +62,6 @@ class WorldCreateView(CreateView):
     template_name = 'author/world_create.html'
     success_url = '/author/world'
 
+class WorldDeleteView(DeleteView):
+    model = World
+    success_url = '/author/world'
