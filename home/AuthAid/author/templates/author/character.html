@@ -5,9 +5,9 @@
     <title>Character</title>
 </head>
 <body>
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
-<h2>.Character</h2>
+{% extends "author/base.html" %}
+{%block content%}
+
     {% if character_list %}
         {% for character in character_list %}
              <h3>{{character.name}} {{character.surname}} </h3>
@@ -17,11 +17,8 @@
             <b>Description:</b>{{character.description}}<br>
             <b>Notes:</b>{{character.notes}}<br>
             <b>World: </b>{{character.world}}<br>
-
-
-
         {% endfor %}
     {% endif %}
-
+{%endblock%}
 </body>
 </html>

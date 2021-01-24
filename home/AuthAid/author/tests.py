@@ -3,8 +3,7 @@ from .models import *
 from django.utils import timezone
 from django.urls import reverse
 
-
-# Create your tests here.
+"""MODEL TESTS"""
 class WorldModelTests(TestCase):
     def test_name_works_or_not(self):
         world_name = World.objects.create(name='TestWorld')
@@ -45,8 +44,6 @@ class ChapterTests(TestCase):
 
         self.assertEqual(list(chapter_instance), list(search_ass_result_world))
         self.assertEqual(list(chapter_instance), list(search_ass_result_ngi))
-
-
 
 class SceneTests(TestCase):
     def test_description_works_or_not(self):
@@ -126,7 +123,6 @@ class CharacterTests(TestCase):
         self.assertEqual(list(char_1_known), list(char_1_knows_who))
         self.assertNotEqual(list(char_2_known), list(char_2_knows_who))
 
-
 class LocationTests(TestCase):
     def test_name_works_or_not(self):
         location_name = Location.objects.create(name='TestPlace')
@@ -164,3 +160,25 @@ class NonModelFunctionsTest(TestCase):
         ngi_instance = NarrativeGeneralInfo.objects.filter(world=world_instance)
         search_ass_result = search_ass(NarrativeGeneralInfo,world = world_instance.id)
         self.assertQuerysetEqual( ngi_instance,search_ass_result)
+
+"""VIEW TESTS"""
+class WorldViewTests(TestCase):
+    def test_ordered_queryset_returns_all_instances(self):
+        worlds_ordered = World.objects.all().order_by('name')
+        worlds_all_no_order = World.objects.all()
+        self.assertQuerysetEqual(worlds_ordered,worlds_all_no_order)
+
+class NgiViewTests(TestCase):
+    pass
+
+class ChapterViewTests(TestCase):
+    pass
+
+class SceneViewTests(TestCase):
+    pass
+
+class CharacterViewTests(TestCase):
+    pass
+
+class LocationViewTests(TestCase):
+    pass

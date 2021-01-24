@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 #These don't work with sqlite3?
 name_length = 500
 description_length = 2000
@@ -21,6 +21,9 @@ class World(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('world_update', kwargs={'pk': self.pk})
 
 #An individual Narrative, i.e. a single novel, within the World.
 class NarrativeGeneralInfo(models.Model):

@@ -1,1 +1,30 @@
-body {background-color: azure;}
+* {box-sizing: border-box; border-radius: 25px}
+
+body {font-family: arial; padding:10px; background: Azure;}
+
+.header{padding: 10px; text-align: left; background: white;}
+.header h1{font-size: 30px; color: #2F4F4F}
+.header h2{font-size: 20px; color: #2F4F4F}
+.header a:link,a:visited {text-decoration: none; color:#2F4F4F;}
+
+.topnav{overflow:auto; background-color:Snow}
+.topnav a {
+  float: left;
+  display: block;
+  color: #2F4F4F;
+  text-align: center;
+  padding: 14px 70px;
+  text-decoration: none;}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+  }
+}

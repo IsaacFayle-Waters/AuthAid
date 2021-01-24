@@ -1,14 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView,DetailView
 from django.views.generic.edit import UpdateView
 from .models import World, NarrativeGeneralInfo, Chapter, Scene, Character, Location, search_ass
-# Create your views here.
 
 class IndexView(TemplateView):
     template_name = 'author/index.html'
-    context_object_name = 'world_list'
 
+'''List Views'''
 class WorldView(ListView):
     template_name = 'author/world.html'
     context_object_name = 'world_list'
@@ -45,4 +44,18 @@ class LocationView(ListView):
 
     def get_queryset(self):
         return Location.objects.all().order_by('world')
+
+'''Detail Views'''
+class WorldDetailView(DetailView):
+    model = World
+    template_name = 'author/world_detail.html'
+
+
+'''Update Views'''
+class WorldUpdateView(UpdateView):
+    model = World
+    fields = '__all__'
+    template_name = 'author/world_update.html'
+
+
 

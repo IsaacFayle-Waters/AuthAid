@@ -5,10 +5,8 @@
     <title>Chapter</title>
 </head>
 <body>
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
-<h2>.Chapter</h2>
-
+{% extends "author/base.html" %}
+{%block content%}
 {%if chapter_list%}
     {%for chapter in chapter_list%}
         <h3>{{chapter.title}}</h3>
@@ -18,6 +16,6 @@
         <b>Notes:</b> {{chapter.notes}}<br>
     {%endfor%}
 {%endif%}
-
+{%endblock%}
 </body>
 </html>

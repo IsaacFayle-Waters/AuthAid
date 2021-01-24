@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Base</title>
+    {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
+</head>
+<body>
+
+<div class="header">
+<h1><a href="{%url 'author:index' %}" text-decoration="none">.authAid</a></h1>
+</div>
+<div class="topnav">
+     <a href="{%url 'author:world' %}" title="world">World</a>
+      <a href="{%url 'author:narrativegeneralinfo' %}" title="narrativegeneralinfo">Narrative</a>
+         <a href="{%url 'author:chapter' %}" title="chapter">Chapter</a>
+         <a href="{%url 'author:scene' %}" title="scene">Scene</a>
+         <a href="{%url 'author:character' %}" title="character">Character</a>
+         <a href="{%url 'author:location'%}" title="location">Location</a>
+</div>
+
+{%block content%}
+{%endblock%}
+
+</body>
+</html>

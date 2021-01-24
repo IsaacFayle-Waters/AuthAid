@@ -5,9 +5,8 @@
     <title>Narrative General Information</title>
 </head>
 <body>
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
-<h2>.Narrative</h2>
+{% extends "author/base.html" %}
+{% block content %}
     {% if ngi_list %}
         {% for ngi in ngi_list %}
             <h3>{{ngi.title}}</h3>
@@ -18,6 +17,7 @@
                 <b>Notes:</b> {{ngi.notes}}<br>
         {% endfor %}
     {%endif%}
+{%endblock%}
 
 </body>
 </html>

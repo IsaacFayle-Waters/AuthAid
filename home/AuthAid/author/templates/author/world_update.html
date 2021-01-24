@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>.authAid</title>
-
+    <title>World_update</title>
 </head>
 <body>
-
 {% extends "author/base.html" %}
 {%block content%}
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="submit">
+</form>
 {%endblock%}
-
 </body>
 </html>

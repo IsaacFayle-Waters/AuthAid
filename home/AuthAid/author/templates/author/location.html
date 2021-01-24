@@ -5,9 +5,8 @@
     <title>Location</title>
 </head>
 <body>
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
-<h2>.Location</h2>
+{% extends "author/base.html" %}
+{%block content%}
 
 {% if location_list %}
     {%for location in location_list%}
@@ -17,6 +16,6 @@
         <b>World: </b>{{location.world}}<br>
     {%endfor%}
 {%endif%}
-
+{%endblock%}
 </body>
 </html>

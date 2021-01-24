@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WorldDetail</title>
+</head>
+<body>
+
+{% extends "author/base.html" %}
+{%block content%}
+    <h3>{{world.name}}</h3>
+                <b>Description:</b> {{world.description}}<br>
+                <b>Notes:</b> {{world.notes}}</br>
+
+                <a href="{% url 'author:world_update' world.id %}">update</a>
+{%endblock%}
+
+</body>
+</html>
