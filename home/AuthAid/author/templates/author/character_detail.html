@@ -14,6 +14,8 @@
             <b>Description:</b>{{character.description}}<br>
             <b>Notes:</b>{{character.notes}}<br>
             <b>World: </b>{{character.world}}<br>
+<a href="{% url 'author:character_update' pk=character.pk %}">update</a>
+<a href="{% url 'author:character_delete' pk=character.pk %}">delete</a>
 {%endblock%}
 
 </body>

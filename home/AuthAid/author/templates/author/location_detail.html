@@ -12,6 +12,8 @@
         <b>Description:</b>{{location.description}}<br>
         <b>Notes:</b>{{location.notes}}<br>
         <b>World: </b>{{location.world}}<br>
+<a href="{% url 'author:location_update' pk=location.pk %}">update</a>
+<a href="{% url 'author:location_delete' pk=location.pk %}">delete</a>
 {%endblock%}
 </body>
 </html>

@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create World</title>
+    <title>Delete Character</title>
 </head>
 <body>
 {% extends "author/base.html" %}
 {%block content%}
 <form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
+    Are you sure you want to delete {{character.name}}?
+    <input type="submit" value="Confirm">
 </form>
 {%endblock%}
 </body>

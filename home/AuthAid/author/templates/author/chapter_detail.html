@@ -12,6 +12,8 @@
         <b>Narrative: </b> {{chapter.ngi}}<br>
         <b>World: </b> {{chapter.world}}<br>
         <b>Notes:</b> {{chapter.notes}}<br>
+    <a href="{% url 'author:chapter_update' pk=chapter.pk %}">update</a>
+    <a href="{% url 'author:chapter_delete' pk=chapter.pk %}">delete</a>
 {%endblock%}
 </body>
 </html>
