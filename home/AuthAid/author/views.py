@@ -5,14 +5,18 @@ from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from .models import World, NarrativeGeneralInfo, Chapter, Scene, Character, Location, search_ass
 
 '''Helper Functions'''
+#Redirect after create,update,delete
 def getSuccessUrl():
     return '/author/world'
-
+#Include path form app
 def getPathFrom(htmlString):
     return 'author/' + htmlString
-
+#Include path from app, and help with contect object of list type
 def getPathFromAndContext_list(htmlString, contextString):
-    return 'author/'+ htmlString, contextString + '_list'
+    return 'author/'+ htmlString +'.html', contextString + '_list'
+#Get model and template
+def getModelTemplate(ModelClass,templateString):
+    return ModelClass, getPathFrom(templateString) + '.html'
 
 '''Template Views'''
 class IndexView(TemplateView):
@@ -20,50 +24,47 @@ class IndexView(TemplateView):
 
 '''List Views'''
 class WorldView(ListView):
-    template_name,context_object_name = getPathFromAndContext_list('world.html', 'world')
+    template_name,context_object_name = getPathFromAndContext_list('world', 'world')
     def get_queryset(self):
         return World.objects.all().order_by('name')
 
 class NarrativeGeneralInfoView(ListView):
-    template_name, context_object_name = getPathFromAndContext_list('narrativegeneralinfo.html', 'ngi')
+    template_name, context_object_name = getPathFromAndContext_list('narrativegeneralinfo', 'ngi')
     def get_queryset(self):
         return NarrativeGeneralInfo.objects.all().order_by('world')
 
 class ChapterView(ListView):
-    template_name, context_object_name = getPathFromAndContext_list('chapter.html', 'chapter')
+    template_name, context_object_name = getPathFromAndContext_list('chapter', 'chapter')
     def get_queryset(self):
         return Chapter.objects.all().order_by('world')
 
 class SceneView(ListView):
-    template_name, context_object_name = getPathFromAndContext_list('scene.html', 'scene')
+    template_name, context_object_name = getPathFromAndContext_list('scene', 'scene')
     def get_queryset(self):
         return Scene.objects.all().order_by('world')
 
 class CharacterView(ListView):
-    template_name, context_object_name = getPathFromAndContext_list('character.html', 'character')
+    template_name, context_object_name = getPathFromAndContext_list('character', 'character')
     def get_queryset(self):
         return Character.objects.all().order_by('world')
 
 class LocationView(ListView):
-    template_name, context_object_name = getPathFromAndContext_list('location.html', 'location')
+    template_name, context_object_name = getPathFromAndContext_list('location', 'location')
     def get_queryset(self):
         return Location.objects.all().order_by('world')
 
 '''World Views: Detail, Update , Create, Delete '''
 class WorldDetailView(DetailView):
-    model = World
-    template_name = getPathFrom('world_detail.html')
+    model,template_name = getModelTemplate(World,'world_detail')
 
 class WorldCreateView(CreateView):
-    model = World
+    model, template_name = getModelTemplate(World, 'world_create')
     fields = '__all__'
-    template_name = getPathFrom('world_create.html')
     success_url = getSuccessUrl()
 
 class WorldUpdateView(UpdateView):
-    model = World
+    model, template_name = getModelTemplate(World, 'world_update')
     fields = '__all__'
-    template_name = getPathFrom('world_update.html')
     success_url = getSuccessUrl()
 
 class WorldDeleteView(DeleteView):
@@ -72,20 +73,17 @@ class WorldDeleteView(DeleteView):
 
 '''NarrativeGeneralInfo Views:Detail,Create,Update,Delete'''
 class NarrativeGeneralInfoDetailView(DetailView):
-    model = NarrativeGeneralInfo
-    template_name = getPathFrom('narrative_detail.html')
+    model,template_name = getModelTemplate(NarrativeGeneralInfo,'narrative_detail')
     context_object_name = 'ngi'
 
 class NarrativeGeneralInfoCreateView(CreateView):
-     model = NarrativeGeneralInfo
-     fields = '__all__'
-     template_name = getPathFrom('narrative_create.html')
-     success_url = getSuccessUrl()
+    model, template_name = getModelTemplate(NarrativeGeneralInfo, 'narrative_create')
+    fields = '__all__'
+    success_url = getSuccessUrl()
 
 class NarrativeGeneralInfoUpdateView(UpdateView):
-    model = NarrativeGeneralInfo
+    model, template_name = getModelTemplate(NarrativeGeneralInfo, 'narrative_update')
     fields = '__all__'
-    template_name = getPathFrom('narrative_update.html')
     success_url = getSuccessUrl()
 
 class NarrativeGeneralInfoDeleteView(DeleteView):
@@ -95,19 +93,16 @@ class NarrativeGeneralInfoDeleteView(DeleteView):
 
 '''Chapter views: Detail, Create, Update, Delete'''
 class ChapterDetailView(DetailView):
-    model = Chapter
-    template_name = getPathFrom('chapter_detail.html')
+    model, template_name = getModelTemplate(Chapter, 'chapter_detail')
 
 class ChapterCreateView(CreateView):
-    model = Chapter
+    model,template_name = getModelTemplate(Chapter,'chapter_create')
     fields = '__all__'
-    template_name = getPathFrom('chapter_create.html')
     success_url = getSuccessUrl()
 
 class ChapterUpdateView(UpdateView):
-    model = Chapter
+    model, template_name = getModelTemplate(Chapter, 'chapter_update')
     fields = '__all__'
-    template_name = getPathFrom('chapter_update.html')
     success_url = getSuccessUrl()
 
 class ChapterDeleteView(DeleteView):
@@ -116,19 +111,16 @@ class ChapterDeleteView(DeleteView):
 
 '''Scene views'''
 class SceneDetailView(DetailView):
-    model = Scene
-    template_name = getPathFrom('scene_detail.html')
+    model, template_name = getModelTemplate(Scene, 'scene_detail')
 
 class SceneCreateView(CreateView):
-    model = Scene
+    model, template_name = getModelTemplate(Scene, 'scene_create')
     fields = '__all__'
-    template_name = getPathFrom('scene_create.html')
     success_url = getSuccessUrl()
 
 class SceneUpdateView(UpdateView):
-    model = Scene
+    model, template_name = getModelTemplate(Scene, 'scene_update')
     fields = '__all__'
-    template_name = getPathFrom('scene_update.html')
     success_url = getSuccessUrl()
 
 class SceneDeleteView(DeleteView):
@@ -137,19 +129,16 @@ class SceneDeleteView(DeleteView):
 
 '''Character views'''
 class CharacterDetailView(DetailView):
-    model = Character
-    template_name = getPathFrom('character_detail.html')
+    model, template_name = getModelTemplate(Character, 'character_detail')
 
 class CharacterCreateView(CreateView):
-    model = Character
+    model, template_name = getModelTemplate(Character, 'character_create')
     fields = '__all__'
-    template_name = getPathFrom('character_create.html')
     success_url = getSuccessUrl()
 
 class CharacterUpdateView(UpdateView):
-    model = Character
+    model, template_name = getModelTemplate(Character, 'character_update')
     fields = '__all__'
-    template_name = getPathFrom('character_update.html')
     success_url = getSuccessUrl()
 
 class CharacterDeleteView(DeleteView):
@@ -158,21 +147,20 @@ class CharacterDeleteView(DeleteView):
 
 '''Location views'''
 class LocationDetailView(DetailView):
-    model = Location
-    template_name = getPathFrom('location_detail.html')
+    model, template_name = getModelTemplate(Location, 'location_detail')
 
 class LocationCreateView(CreateView):
-    model = Location
+    model, template_name = getModelTemplate(Location, 'location_create')
     fields = '__all__'
-    template_name = getPathFrom('location_create.html')
     success_url = getSuccessUrl()
 
 class LocationUpdateView(UpdateView):
-    model = Location
+    model, template_name = getModelTemplate(Location, 'location_update')
     fields = '__all__'
-    template_name = getPathFrom('location_update.html')
     success_url = getSuccessUrl()
 
 class LocationDeleteView(DeleteView):
     model = Location
     success_url = getSuccessUrl()
+
+

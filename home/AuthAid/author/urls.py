@@ -22,21 +22,21 @@ urlpatterns = [
     path('character/<int:pk>/', views.CharacterDetailView.as_view(), name='character_detail'),
     path('location/<int:pk>/', views.LocationDetailView.as_view(), name='location_detail'),
 
-    #Creates
+    #Create Views
     path('world_create/',views.WorldCreateView.as_view(),name='world_create'),
     path('narrative_create/',views.NarrativeGeneralInfoCreateView.as_view(),name='narrative_create'),
     path('chapter_create/',views.ChapterCreateView.as_view(),name='chapter_create'),
     path('scene_create/', views.SceneCreateView.as_view(), name='scene_create'),
     path('character_create/', views.CharacterCreateView.as_view(), name='character_create'),
     path('location_create/', views.LocationCreateView.as_view(), name='location_create'),
-    #Updates
+    #Update Views
     path('world/<int:pk>',views.WorldUpdateView.as_view(),name='world_update'),
     path('narrativegeneralinfo/<int:pk>',views.NarrativeGeneralInfoUpdateView.as_view(),name='narrative_update'),
     path('chapter/<int:pk>',views.ChapterUpdateView.as_view(),name='chapter_update'),
     path('scene/<int:pk>',views.SceneUpdateView.as_view(),name='scene_update'),
     path('character/<int:pk>',views.CharacterUpdateView.as_view(),name='character_update'),
     path('location/<int:pk>',views.LocationUpdateView.as_view(),name='location_update'),
-    #Deletes
+    #Delete Views
     path('world_delete/<int:pk>',views.WorldDeleteView.as_view(),name='world_delete'),
     path('narrative_delete/<int:pk>',views.NarrativeGeneralInfoDeleteView.as_view(),name='narrative_delete'),
     path('chapter_delete/<int:pk>',views.ChapterDeleteView.as_view(),name='chapter_delete'),

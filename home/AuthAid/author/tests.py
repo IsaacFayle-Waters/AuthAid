@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from .models import *
 from django.utils import timezone
 from django.urls import reverse
@@ -154,14 +154,17 @@ class LocationTests(TestCase):
         self.assertEqual(list(loc_1_instance), list(search_ass_result_chapter))
         self.assertEqual(list(loc_1_instance),list(search_ass_result_world))
 
-class NonModelFunctionsTest(TestCase):
+class NonClassModelFunctionsTets(TestCase):
     def test_search_ass(self):
         world_instance = World.objects.create(name="TestWorld")
         ngi_instance = NarrativeGeneralInfo.objects.filter(world=world_instance)
         search_ass_result = search_ass(NarrativeGeneralInfo,world = world_instance.id)
         self.assertQuerysetEqual( ngi_instance,search_ass_result)
 
+
 """VIEW TESTS"""
+
+
 class WorldViewTests(TestCase):
     def test_ordered_queryset_returns_all_instances(self):
         worlds_ordered = World.objects.all().order_by('name')
@@ -182,3 +185,40 @@ class CharacterViewTests(TestCase):
 
 class LocationViewTests(TestCase):
     pass
+
+
+class ClientResponseTests(TestCase):
+    def test_index_url(self):
+        client = Client()
+        response = client.get('/author/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_world_url(self):
+        client = Client()
+        response = client.get('/author/world/')
+        self.assertEqual(response.status_code,200)
+
+    def test_ngi_url(self):
+        client = Client()
+        response = client.get('/author/narrativegeneralinfo/')
+        self.assertEqual(response.status_code,200)
+
+    def test_chapter_url(self):
+        client = Client()
+        response = client.get('/author/chapter/')
+        self.assertEqual(response.status_code,200)
+
+    def test_scene_url(self):
+        client = Client()
+        response = client.get('/author/scene/')
+        self.assertEqual(response.status_code,200)
+
+    def test_character_url(self):
+        client = Client()
+        response = client.get('/author/character/')
+        self.assertEqual(response.status_code,200)
+
+    def test_location_url(self):
+        client = Client()
+        response = client.get('/author/location/')
+        self.assertEqual(response.status_code,200)
