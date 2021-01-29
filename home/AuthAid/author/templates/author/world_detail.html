@@ -12,8 +12,36 @@
                 <b>Description:</b> {{world.description}}<br>
                 <b>Notes:</b> {{world.notes}}</br>
 
+<br>
+            <b>Narratives:</b>
+            {%for ngi in world.ngis.all%}
+                <ol>{{ngi}}</ol>
+            {%endfor%}
+<br>
+            <b>Chapters:</b>
+                            {%for chapter in world.chapters.all%}
+                            <ol>{{chapter}}</ol>
+                            {%endfor%}
+
+<br>        <b>Scenes:</b> {%for scene in world.scenes.all%}
+                             <ol>{{scene}}</ol>
+                            {%endfor%}
+
+<br>
+            <b>Characters:</b> {%for character in world.characters.all%}
+                                <ol>{{character}}</ol>
+                            {%endfor%}
+<br>
+
+            <b>Locations:</b> {%for location in world.locations.all%}
+                                <ol>{{location}}</ol>
+                            {%endfor%}
+<br>
+
                 <a href="{% url 'author:world_update' pk=world.pk %}">update</a>
                 <a href="{% url 'author:world_delete' pk=world.pk %}">delete</a>
+
+
 {%endblock%}
 
 </body>

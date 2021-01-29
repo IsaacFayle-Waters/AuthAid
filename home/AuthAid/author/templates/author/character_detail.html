@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Character Details.</title>
 </head>
-<body>
 {% extends "author/base.html" %}
 {%block content%}
 <h3>{{character.name}} {{character.surname}} </h3>
@@ -14,6 +13,22 @@
             <b>Description:</b>{{character.description}}<br>
             <b>Notes:</b>{{character.notes}}<br>
             <b>World: </b>{{character.world}}<br>
+            <b>Narratives: </b> {%for ngi in character.ngi.all%}
+                                        <ol>{{ngi}}</ol>
+                                    {%endfor%}
+            <br>
+            <b>Chapters:</b> {%for chapter in character.chapters.all%}
+                                <ol>{{chapter}}</ol>
+                            {%endfor%}
+            <br>
+            <b>Scenes:</b> {%for scene in character.scenes.all%}
+                                <ol>{{scene}}</ol>
+                            {%endfor%}
+            <br>
+            <b>Acquaintances:</b> {%for character in character.acquaintances.all%}
+                                <ol>{{character}}</ol>
+                            {%endfor%}
+            <br>
 <a href="{% url 'author:character_update' pk=character.pk %}">update</a>
 <a href="{% url 'author:character_delete' pk=character.pk %}">delete</a>
 {%endblock%}

@@ -32,6 +32,21 @@ class World(models.Model):
     def __str__(self):
         return self.name
 
+    def ngis(self):
+        return search_ass(NarrativeGeneralInfo, world=self)
+
+    def chapters(self):
+        return search_ass(Chapter, world=self)
+
+    def scenes(self):
+        return search_ass(Scene, world=self)
+
+    def characters(self):
+        return search_ass(Character,world=self)
+
+    def locations(self):
+        return search_ass(Location,world=self)
+
 #An individual Narrative, i.e. a single novel, within the World.
 class NarrativeGeneralInfo(models.Model):
     title,description,notes = charFieldsAndNotes()
@@ -42,6 +57,18 @@ class NarrativeGeneralInfo(models.Model):
     def __str__(self):
         return self.title
 
+    def chapters(self):
+        return search_ass(Chapter,ngi=self)
+
+    def scenes(self):
+        return search_ass(Scene,ngi=self)
+
+    def characters(self):
+        return search_ass(Character,ngi=self)
+
+    def locations(self):
+        return search_ass(Location,ngi=self)
+
 class Chapter(models.Model):
     title, description, notes = charFieldsAndNotes()
     ngi = setForeignKeysNullDelete(NarrativeGeneralInfo)
@@ -51,7 +78,17 @@ class Chapter(models.Model):
     def __str__(self):
         return self.title
 
+    def scenes(self):
+        return search_ass(Scene,chapter=self)
+
+    def characters(self):
+        return search_ass(Character,chapters=self)
+
+    def locations(self):
+        return search_ass(Location,chapters=self)
+
 class Scene(models.Model):
+
     description = models.CharField(max_length=description_length, default='',blank=True)
     notes = notes_all
     time_and_or_date = models.CharField(max_length=100, default='',blank=True)
@@ -63,9 +100,16 @@ class Scene(models.Model):
     def __str__(self):
         return self.description
 
+    def characters(self):
+        return search_ass(Character,scenes=self)
+
+    def locations(self):
+        return search_ass(Location,scenes=self)
+
 class Character(models.Model):
     name,description,notes = charFieldsAndNotes()
     surname = models.CharField(max_length=name_length, default='',blank=True)
+    #TODO: age can expeirence OverflowError if figure too high
     age = models.IntegerField(default=0)
     gender = models.CharField(max_length=30, default='',blank=True)
     motive = models.CharField(max_length=50, default='',blank=True)
@@ -74,7 +118,7 @@ class Character(models.Model):
     world = setForeignKeysNullDelete(World)
     scenes = models.ManyToManyField(Scene,blank=True)
     chapters = models.ManyToManyField(Chapter,blank=True)
-    ngi = setForeignKeysNullDelete(NarrativeGeneralInfo)
+    ngi = models.ManyToManyField(NarrativeGeneralInfo,blank=True)
 
     #Basic relationships between characters, in this case whether they know each other
     #c1.acquaintances.add(c2)
@@ -85,8 +129,8 @@ class Character(models.Model):
 
 class Location(models.Model):
     name, description, notes = charFieldsAndNotes()
-    world =  world = setForeignKeysNullDelete(World)
-    ngi = setForeignKeysNullDelete(NarrativeGeneralInfo)
+    world = world = setForeignKeysNullDelete(World)
+    ngi = models.ManyToManyField(NarrativeGeneralInfo)
     scenes = models.ManyToManyField(Scene,blank=True)
     chapters = models.ManyToManyField(Chapter,blank=True)
 

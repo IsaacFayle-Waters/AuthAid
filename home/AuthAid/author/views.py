@@ -131,6 +131,7 @@ class SceneDeleteView(DeleteView):
 class CharacterDetailView(DetailView):
     model, template_name = getModelTemplate(Character, 'character_detail')
 
+
 class CharacterCreateView(CreateView):
     model, template_name = getModelTemplate(Character, 'character_create')
     fields = '__all__'
@@ -162,5 +163,3 @@ class LocationUpdateView(UpdateView):
 class LocationDeleteView(DeleteView):
     model = Location
     success_url = getSuccessUrl()
-
-

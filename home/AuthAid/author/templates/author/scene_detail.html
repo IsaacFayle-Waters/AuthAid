@@ -13,6 +13,24 @@
         <b>Narrative: </b>{{scene.ngi}}<br>
         <b>World: </b>{{scene.world }}<br>
         <b>Notes: </b>{{scene.notes}}<br>
+        <b>Narratives: </b> {%for ngi in scene.ngi.all%}
+                                <ol>{{ngi}}</ol>
+                                {%endfor%}
+            <br>
+            <b>Chapters:</b> {%for chapter in scene.chapters.all%}
+                                <ol>{{chapter}}</ol>
+                            {%endfor%}
+<br>
+            <b>Characters:</b> {%for character in scene.characters.all%}
+                                <ol>{{character}}</ol>
+                            {%endfor%}
+<br>
+
+            <b>Locations:</b> {%for location in scene.locations.all%}
+                                <ol>{{location}}</ol>
+                            {%endfor%}
+<br>
+
 <a href="{% url 'author:scene_update' pk=scene.pk %}">update</a>
 <a href="{% url 'author:scene_delete' pk=scene.pk %}">delete</a>
 {%endblock%}

@@ -12,6 +12,19 @@
         <b>Description:</b>{{location.description}}<br>
         <b>Notes:</b>{{location.notes}}<br>
         <b>World: </b>{{location.world}}<br>
+
+            <b>Narratives: </b> {%for ngi in location.ngi.all%}
+                                        <ol>{{ngi}}</ol>
+                                    {%endfor%}
+            <br>
+            <b>Chapters:</b> {%for chapter in location.chapters.all%}
+                                <ol>{{chapter}}</ol>
+                            {%endfor%}
+            <br>
+            <b>Scenes:</b> {%for scene in location.scenes.all%}
+                                <ol>{{scene}}</ol>
+                            {%endfor%}
+            <br>
 <a href="{% url 'author:location_update' pk=location.pk %}">update</a>
 <a href="{% url 'author:location_delete' pk=location.pk %}">delete</a>
 {%endblock%}

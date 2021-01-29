@@ -13,6 +13,27 @@
                 <b>Genre: </b>{{ngi.genre}}<br>
                 <b>World:</b>{{ngi.world}}<br>
                 <b>Notes:</b> {{ngi.notes}}<br>
+<br>
+            <b>Chapters: </b>
+                            {%for chapter in ngi.chapters.all%}
+                            <ol>{{chapter}}</ol>
+                            {%endfor%}
+
+<br>        <b>Scenes:</b> {%for scene in ngi.scenes.all%}
+                             <ol>{{scene}}</ol>
+                            {%endfor%}
+
+<br>
+            <b>Characters:</b> {%for character in ngi.characters.all%}
+                                <ol>{{character}}</ol>
+                            {%endfor%}
+<br>
+
+            <b>Locations:</b> {%for location in ngi.locations.all%}
+                                <ol>{{location}}</ol>
+                            {%endfor%}
+<br>
+
     <a href="{% url 'author:narrative_update' pk=ngi.pk %}">update</a>
     <a href="{% url 'author:narrative_delete' pk=ngi.pk %}">delete</a>
 {%endblock%}

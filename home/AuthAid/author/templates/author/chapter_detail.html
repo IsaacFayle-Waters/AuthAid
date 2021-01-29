@@ -12,6 +12,21 @@
         <b>Narrative: </b> {{chapter.ngi}}<br>
         <b>World: </b> {{chapter.world}}<br>
         <b>Notes:</b> {{chapter.notes}}<br>
+<br>        <b>Scenes:</b> {%for scene in chapter.scenes.all%}
+                             <ol>{{scene}}</ol>
+                            {%endfor%}
+
+<br>
+            <b>Characters:</b> {%for character in chapter.characters.all%}
+                                <ol>{{character}}</ol>
+                            {%endfor%}
+<br>
+
+            <b>Locations:</b> {%for location in chapter.locations.all%}
+                                <ol>{{location}}</ol>
+                            {%endfor%}
+<br>
+
     <a href="{% url 'author:chapter_update' pk=chapter.pk %}">update</a>
     <a href="{% url 'author:chapter_delete' pk=chapter.pk %}">delete</a>
 {%endblock%}
