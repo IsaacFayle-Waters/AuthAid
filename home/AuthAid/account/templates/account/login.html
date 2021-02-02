@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <title>Login</title>
     {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
 </head>
@@ -12,21 +12,26 @@
 <h1><a href="{%url 'author:index' %}" text-decoration="none">.authAid</a></h1>
 </div>
 
-<h2>Registration</h2>
+<h2>Login</h2>
 <form method="post">{% csrf_token %}
-    {%for field in registration_form%}
+    {%for field in login_form%}
         <p>{{field.label_tag}}
             {{field}}
             {%if field.help_text%}
                 <small style="color: grey;">{{field.help_text}}</small>
             {%endif%}
-            {%for error in field.errors%}
-                <p style="color: red;">{{error}}</p>
-            {%endfor%}
+
         </p>
     {%endfor%}
+    {%for error in field.errors%}
+                <p style="color: red;">{{error}}</p>
+    {%endfor%}
 
-    <button type="submit">Register</button>
+            {%if login_form.non_field_errors%}
+            <div style="color:red;">{{login_form.non_field_errors}}</div>
+            {%endif%}
+
+    <button type="submit">Login</button>
 </form>
 </body>
 </html>

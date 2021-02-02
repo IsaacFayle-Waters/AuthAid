@@ -9,7 +9,10 @@
 <body>
 
 <div class="header">
-    <h2><a href="#" text-decoration="none"> login/signup</a></h2>
+    {% if request.user.is_authenticated %}
+    <small><a href="{% url 'account:logout'%}">Log out?</a></small>
+    <h2>Welcome {{request.user.username}}!</h2>
+    {% endif %}
 <h1><a href="{%url 'author:index' %}" text-decoration="none">.authAid</a></h1>
 </div>
 <div class="topnav">

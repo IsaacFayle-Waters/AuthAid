@@ -19,6 +19,7 @@ def getModelTemplate(ModelClass,templateString):
     return ModelClass, getPathFrom(templateString) + '.html'
 
 '''Template Views'''
+
 class IndexView(TemplateView):
     template_name = getPathFrom('index.html')
 

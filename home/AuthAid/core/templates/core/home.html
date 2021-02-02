@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'author/style.css' %}">
+</head>
+<body>
+
+<div class="header">
+<h1><a href="{%url 'author:index' %}" text-decoration="none">.authAid</a></h1>
+</div>
+{% if request.user.is_authenticated %}
+<p>Welcome {{request.user.username}}!</p>
+<a href="{%url 'author:index' %}">Continue</a>
+{%else%}
+<h2><a href="{%url 'account:register' %}">SignUp</a> or <a href="{%url 'account:login' %}">LogIn</a></h2>
+{% endif %}
+</body>
+</html>
