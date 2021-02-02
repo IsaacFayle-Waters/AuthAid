@@ -5,3 +5,16 @@
   background-color: #ddd;
   color: black;}
 .sidebar h6{color:#2F4F4F;}
+
+.login{background-color:snow;
+        position:absolute;
+         width:fit-content;
+         height:fit-content;
+         padding:14px 14px;
+         margin:0 auto;
+         top:50%;
+         left:30%;
+         border:#22F4F4F;
+
+         box-shadow: 3px 3px 5px;
+         border-radius:25px;}

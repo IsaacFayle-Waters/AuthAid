@@ -1,5 +1,5 @@
 from django.db import models
-from django.urls import reverse
+from django.contrib.auth.models import User
 #These don't work with sqlite3?
 name_length = 500
 description_length = 2000
@@ -136,3 +136,11 @@ class Location(models.Model):
 
     def __str__(self):
         return self.name
+
+
+'''class SignUp(User):
+    #username is email
+    def get_username(self):
+        return self.email
+    def set_password(self, raw_password):
+        return'''
