@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 #These don't work with sqlite3?
 name_length = 500
 description_length = 2000
@@ -29,6 +29,8 @@ def setForeignKeysCascadeDelete(TargetClass):
 #Basically a project. Allows several 'novels'(ngi's) set in one world/universe.
 class World(models.Model):
     name,description,notes = charFieldsAndNotes()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='world', null=True)
+
     def __str__(self):
         return self.name
 
@@ -53,7 +55,7 @@ class NarrativeGeneralInfo(models.Model):
     setting = models.CharField(max_length=2000, default='',blank=True)
     genre = models.CharField(max_length=200, default='',blank=True)
     world = setForeignKeysCascadeDelete(World)
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='narrativegeneralinfo', null=True)
     def __str__(self):
         return self.title
 
@@ -75,6 +77,8 @@ class Chapter(models.Model):
     world = setForeignKeysCascadeDelete(World)
     #TODO: DECIDE HOW TO HANDLE CHAPTER NUMBERS
     chapter_number = models.IntegerField(default=0)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chapter', null=True)
+
     def __str__(self):
         return self.title
 
@@ -96,7 +100,7 @@ class Scene(models.Model):
     chapter = setForeignKeysNullDelete(Chapter)
     ngi = setForeignKeysNullDelete(NarrativeGeneralInfo)
     world = setForeignKeysCascadeDelete(World)
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='scene', null=True)
     def __str__(self):
         return self.description
 
@@ -123,7 +127,7 @@ class Character(models.Model):
     #Basic relationships between characters, in this case whether they know each other
     #c1.acquaintances.add(c2)
     acquaintances = models.ManyToManyField('self',related_name='persons_known',blank=True)
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='character', null=True)
     def __str__(self):
         return  self.name
 
@@ -133,14 +137,6 @@ class Location(models.Model):
     ngi = models.ManyToManyField(NarrativeGeneralInfo)
     scenes = models.ManyToManyField(Scene,blank=True)
     chapters = models.ManyToManyField(Chapter,blank=True)
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='location', null=True)
     def __str__(self):
         return self.name
-
-
-'''class SignUp(User):
-    #username is email
-    def get_username(self):
-        return self.email
-    def set_password(self, raw_password):
-        return'''

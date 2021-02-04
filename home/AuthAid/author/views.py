@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView,DetailView
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from .models import World, NarrativeGeneralInfo, Chapter, Scene, Character, Location, search_ass
@@ -18,149 +17,193 @@ def getPathFromAndContext_list(htmlString, contextString):
 def getModelTemplate(ModelClass,templateString):
     return ModelClass, getPathFrom(templateString) + '.html'
 
-'''Template Views'''
+#Fields
+worldFields = ['name','description','notes']
+ngiFields = ['title', 'description', 'notes', 'setting', 'genre','world']
+chapterFields = ['title', 'description', 'notes', 'ngi', 'world', 'chapter_number']
+sceneFields = ['description', 'notes', 'time_and_or_date', 'chapter', 'ngi', 'world']
+characterFields = ['name', 'surname', 'age', 'gender', 'motive', 'description', 'world', 'scenes', 'chapters', 'ngi', 'acquaintances', 'notes']
+locationFields = [ 'name', 'description', 'notes' ,'world' ,'ngi' ,'scenes', 'chapters']
 
-class IndexView(TemplateView):
+'''Template Views'''
+class IndexView(LoginRequiredMixin,TemplateView):
     template_name = getPathFrom('index.html')
+    login_url = '../core'
 
 '''List Views'''
-class WorldView(ListView):
+class WorldView(LoginRequiredMixin,ListView):
     template_name,context_object_name = getPathFromAndContext_list('world', 'world')
+    login_url = '../../core'
     def get_queryset(self):
-        return World.objects.all().order_by('name')
+        return World.objects.all().filter(user=self.request.user)  #order_by('name')
 
-class NarrativeGeneralInfoView(ListView):
+class NarrativeGeneralInfoView(LoginRequiredMixin,ListView):
     template_name, context_object_name = getPathFromAndContext_list('narrativegeneralinfo', 'ngi')
+    login_url = '../../core'
     def get_queryset(self):
-        return NarrativeGeneralInfo.objects.all().order_by('world')
+        return NarrativeGeneralInfo.objects.all().filter(user=self.request.user)
 
-class ChapterView(ListView):
+class ChapterView(LoginRequiredMixin,ListView):
     template_name, context_object_name = getPathFromAndContext_list('chapter', 'chapter')
+    login_url = '../../core'
     def get_queryset(self):
-        return Chapter.objects.all().order_by('world')
+        return Chapter.objects.all().filter(user=self.request.user)
 
-class SceneView(ListView):
+class SceneView(LoginRequiredMixin,ListView):
     template_name, context_object_name = getPathFromAndContext_list('scene', 'scene')
+    login_url = '../../core'
     def get_queryset(self):
-        return Scene.objects.all().order_by('world')
+        return Scene.objects.all().filter(user=self.request.user)
 
-class CharacterView(ListView):
+class CharacterView(LoginRequiredMixin,ListView):
     template_name, context_object_name = getPathFromAndContext_list('character', 'character')
+    login_url = '../../core'
     def get_queryset(self):
-        return Character.objects.all().order_by('world')
+        return Character.objects.all().filter(user=self.request.user)
 
-class LocationView(ListView):
+class LocationView(LoginRequiredMixin,ListView):
     template_name, context_object_name = getPathFromAndContext_list('location', 'location')
+    login_url = '../../core'
     def get_queryset(self):
-        return Location.objects.all().order_by('world')
+        return Location.objects.all().filter(user=self.request.user)
 
 '''World Views: Detail, Update , Create, Delete '''
-class WorldDetailView(DetailView):
+class WorldDetailView(LoginRequiredMixin,DetailView):
     model,template_name = getModelTemplate(World,'world_detail')
 
-class WorldCreateView(CreateView):
+class WorldCreateView(LoginRequiredMixin,CreateView):
     model, template_name = getModelTemplate(World, 'world_create')
-    fields = '__all__'
+    fields = worldFields
     success_url = getSuccessUrl()
 
-class WorldUpdateView(UpdateView):
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        return super(WorldCreateView,self).form_valid(form)
+
+class WorldUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(World, 'world_update')
-    fields = '__all__'
+    fields = worldFields
     success_url = getSuccessUrl()
 
-class WorldDeleteView(DeleteView):
+class WorldDeleteView(LoginRequiredMixin,DeleteView):
     model = World
     success_url = getSuccessUrl()
 
 '''NarrativeGeneralInfo Views:Detail,Create,Update,Delete'''
-class NarrativeGeneralInfoDetailView(DetailView):
+class NarrativeGeneralInfoDetailView(LoginRequiredMixin,DetailView):
     model,template_name = getModelTemplate(NarrativeGeneralInfo,'narrative_detail')
     context_object_name = 'ngi'
 
-class NarrativeGeneralInfoCreateView(CreateView):
+class NarrativeGeneralInfoCreateView(LoginRequiredMixin,CreateView):
     model, template_name = getModelTemplate(NarrativeGeneralInfo, 'narrative_create')
-    fields = '__all__'
+    fields = ngiFields
     success_url = getSuccessUrl()
 
-class NarrativeGeneralInfoUpdateView(UpdateView):
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+
+        return super(NarrativeGeneralInfoCreateView,self).form_valid(form)
+
+class NarrativeGeneralInfoUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(NarrativeGeneralInfo, 'narrative_update')
-    fields = '__all__'
+    fields = ngiFields
     success_url = getSuccessUrl()
 
-class NarrativeGeneralInfoDeleteView(DeleteView):
+class NarrativeGeneralInfoDeleteView(LoginRequiredMixin,DeleteView):
     model = NarrativeGeneralInfo
     success_url = getSuccessUrl()
     context_object_name = 'ngi'
 
 '''Chapter views: Detail, Create, Update, Delete'''
-class ChapterDetailView(DetailView):
+class ChapterDetailView(LoginRequiredMixin,DetailView):
     model, template_name = getModelTemplate(Chapter, 'chapter_detail')
 
-class ChapterCreateView(CreateView):
+class ChapterCreateView(LoginRequiredMixin,CreateView):
     model,template_name = getModelTemplate(Chapter,'chapter_create')
-    fields = '__all__'
+    fields = chapterFields
     success_url = getSuccessUrl()
 
-class ChapterUpdateView(UpdateView):
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        return super(ChapterCreateView,self).form_valid(form)
+
+class ChapterUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(Chapter, 'chapter_update')
-    fields = '__all__'
+    fields = chapterFields
     success_url = getSuccessUrl()
 
-class ChapterDeleteView(DeleteView):
+class ChapterDeleteView(LoginRequiredMixin,DeleteView):
     model = Chapter
     success_url = getSuccessUrl()
 
 '''Scene views'''
-class SceneDetailView(DetailView):
+class SceneDetailView(LoginRequiredMixin,DetailView):
     model, template_name = getModelTemplate(Scene, 'scene_detail')
 
-class SceneCreateView(CreateView):
+class SceneCreateView(LoginRequiredMixin,CreateView):
     model, template_name = getModelTemplate(Scene, 'scene_create')
-    fields = '__all__'
+    fields = sceneFields
     success_url = getSuccessUrl()
 
-class SceneUpdateView(UpdateView):
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        return super(SceneCreateView,self).form_valid(form)
+
+class SceneUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(Scene, 'scene_update')
-    fields = '__all__'
+    fields = sceneFields
     success_url = getSuccessUrl()
 
-class SceneDeleteView(DeleteView):
+class SceneDeleteView(LoginRequiredMixin,DeleteView):
     model = Scene
     success_url = getSuccessUrl()
 
 '''Character views'''
-class CharacterDetailView(DetailView):
+class CharacterDetailView(LoginRequiredMixin,DetailView):
     model, template_name = getModelTemplate(Character, 'character_detail')
 
-
-class CharacterCreateView(CreateView):
+class CharacterCreateView(LoginRequiredMixin,CreateView):
     model, template_name = getModelTemplate(Character, 'character_create')
-    fields = '__all__'
+    fields = characterFields
     success_url = getSuccessUrl()
 
-class CharacterUpdateView(UpdateView):
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        return super(CharacterCreateView,self).form_valid(form)
+
+class CharacterUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(Character, 'character_update')
-    fields = '__all__'
+    fields = characterFields
     success_url = getSuccessUrl()
 
-class CharacterDeleteView(DeleteView):
+class CharacterDeleteView(LoginRequiredMixin,DeleteView):
     model = Character
     success_url = getSuccessUrl()
 
 '''Location views'''
-class LocationDetailView(DetailView):
+class LocationDetailView(LoginRequiredMixin,DetailView):
     model, template_name = getModelTemplate(Location, 'location_detail')
 
-class LocationCreateView(CreateView):
+class LocationCreateView(LoginRequiredMixin,CreateView):
     model, template_name = getModelTemplate(Location, 'location_create')
-    fields = '__all__'
+    fields = locationFields
     success_url = getSuccessUrl()
 
-class LocationUpdateView(UpdateView):
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        return super(LocationCreateView,self).form_valid(form)
+
+class LocationUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(Location, 'location_update')
-    fields = '__all__'
+    fields = locationFields
     success_url = getSuccessUrl()
 
-class LocationDeleteView(DeleteView):
+class LocationDeleteView(LoginRequiredMixin,DeleteView):
     model = Location
     success_url = getSuccessUrl()
