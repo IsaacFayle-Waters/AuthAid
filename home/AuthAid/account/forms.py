@@ -10,7 +10,6 @@ class RegistrationForm(UserCreationForm):
         model = Account
         fields = ('email','username','password1','password2')
 
-
 class AccountAuthenticateForm(forms.ModelForm):
     password = forms.CharField(label='Password',widget=forms.PasswordInput)
     class Meta:

@@ -1,7 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView,DetailView
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
+
 from .models import World, NarrativeGeneralInfo, Chapter, Scene, Character, Location, search_ass
+from .forms import NgiForm, ChapterForm, SceneForm, CharacterForm, LocationForm
+from .customFields import *
 
 '''Helper Functions'''
 #Redirect after create,update,delete
@@ -17,14 +20,6 @@ def getPathFromAndContext_list(htmlString, contextString):
 def getModelTemplate(ModelClass,templateString):
     return ModelClass, getPathFrom(templateString) + '.html'
 
-#Fields
-worldFields = ['name','description','notes']
-ngiFields = ['title', 'description', 'notes', 'setting', 'genre','world']
-chapterFields = ['title', 'description', 'notes', 'ngi', 'world', 'chapter_number']
-sceneFields = ['description', 'notes', 'time_and_or_date', 'chapter', 'ngi', 'world']
-characterFields = ['name', 'surname', 'age', 'gender', 'motive', 'description', 'world', 'scenes', 'chapters', 'ngi', 'acquaintances', 'notes']
-locationFields = [ 'name', 'description', 'notes' ,'world' ,'ngi' ,'scenes', 'chapters']
-
 '''Template Views'''
 class IndexView(LoginRequiredMixin,TemplateView):
     template_name = getPathFrom('index.html')
@@ -35,7 +30,7 @@ class WorldView(LoginRequiredMixin,ListView):
     template_name,context_object_name = getPathFromAndContext_list('world', 'world')
     login_url = '../../core'
     def get_queryset(self):
-        return World.objects.all().filter(user=self.request.user)  #order_by('name')
+        return World.objects.all().filter(user=self.request.user)
 
 class NarrativeGeneralInfoView(LoginRequiredMixin,ListView):
     template_name, context_object_name = getPathFromAndContext_list('narrativegeneralinfo', 'ngi')
@@ -75,10 +70,10 @@ class WorldCreateView(LoginRequiredMixin,CreateView):
     model, template_name = getModelTemplate(World, 'world_create')
     fields = worldFields
     success_url = getSuccessUrl()
-
     def form_valid(self, form):
         user = self.request.user
         form.instance.user = user
+
         return super(WorldCreateView,self).form_valid(form)
 
 class WorldUpdateView(LoginRequiredMixin,UpdateView):
@@ -97,19 +92,33 @@ class NarrativeGeneralInfoDetailView(LoginRequiredMixin,DetailView):
 
 class NarrativeGeneralInfoCreateView(LoginRequiredMixin,CreateView):
     model, template_name = getModelTemplate(NarrativeGeneralInfo, 'narrative_create')
-    fields = ngiFields
+    form_class = NgiForm
     success_url = getSuccessUrl()
 
     def form_valid(self, form):
         user = self.request.user
         form.instance.user = user
-
         return super(NarrativeGeneralInfoCreateView,self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(NarrativeGeneralInfoCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 class NarrativeGeneralInfoUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(NarrativeGeneralInfo, 'narrative_update')
-    fields = ngiFields
+    form_class = NgiForm
     success_url = getSuccessUrl()
+
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        return super(NarrativeGeneralInfoUpdateView,self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(NarrativeGeneralInfoUpdateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 class NarrativeGeneralInfoDeleteView(LoginRequiredMixin,DeleteView):
     model = NarrativeGeneralInfo
@@ -122,7 +131,7 @@ class ChapterDetailView(LoginRequiredMixin,DetailView):
 
 class ChapterCreateView(LoginRequiredMixin,CreateView):
     model,template_name = getModelTemplate(Chapter,'chapter_create')
-    fields = chapterFields
+    form_class = ChapterForm
     success_url = getSuccessUrl()
 
     def form_valid(self, form):
@@ -130,10 +139,25 @@ class ChapterCreateView(LoginRequiredMixin,CreateView):
         form.instance.user = user
         return super(ChapterCreateView,self).form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(ChapterCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
 class ChapterUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(Chapter, 'chapter_update')
-    fields = chapterFields
+    form_class = ChapterForm
     success_url = getSuccessUrl()
+    '''
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        return super(ChapterUpdateView,self).form_valid(form)
+    '''
+    def get_form_kwargs(self):
+        kwargs = super(ChapterUpdateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 class ChapterDeleteView(LoginRequiredMixin,DeleteView):
     model = Chapter
@@ -145,7 +169,7 @@ class SceneDetailView(LoginRequiredMixin,DetailView):
 
 class SceneCreateView(LoginRequiredMixin,CreateView):
     model, template_name = getModelTemplate(Scene, 'scene_create')
-    fields = sceneFields
+    form_class = SceneForm
     success_url = getSuccessUrl()
 
     def form_valid(self, form):
@@ -153,10 +177,20 @@ class SceneCreateView(LoginRequiredMixin,CreateView):
         form.instance.user = user
         return super(SceneCreateView,self).form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(SceneCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
 class SceneUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(Scene, 'scene_update')
-    fields = sceneFields
+    form_class = SceneForm
     success_url = getSuccessUrl()
+
+    def get_form_kwargs(self):
+        kwargs = super(SceneUpdateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 class SceneDeleteView(LoginRequiredMixin,DeleteView):
     model = Scene
@@ -168,7 +202,7 @@ class CharacterDetailView(LoginRequiredMixin,DetailView):
 
 class CharacterCreateView(LoginRequiredMixin,CreateView):
     model, template_name = getModelTemplate(Character, 'character_create')
-    fields = characterFields
+    form_class = CharacterForm
     success_url = getSuccessUrl()
 
     def form_valid(self, form):
@@ -176,10 +210,20 @@ class CharacterCreateView(LoginRequiredMixin,CreateView):
         form.instance.user = user
         return super(CharacterCreateView,self).form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(CharacterCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
 class CharacterUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(Character, 'character_update')
-    fields = characterFields
+    form_class = CharacterForm
     success_url = getSuccessUrl()
+
+    def get_form_kwargs(self):
+        kwargs = super(CharacterUpdateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 class CharacterDeleteView(LoginRequiredMixin,DeleteView):
     model = Character
@@ -191,8 +235,13 @@ class LocationDetailView(LoginRequiredMixin,DetailView):
 
 class LocationCreateView(LoginRequiredMixin,CreateView):
     model, template_name = getModelTemplate(Location, 'location_create')
-    fields = locationFields
+    form_class = LocationForm
     success_url = getSuccessUrl()
+
+    def get_form_kwargs(self):
+        kwargs = super(LocationCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         user = self.request.user
@@ -201,8 +250,13 @@ class LocationCreateView(LoginRequiredMixin,CreateView):
 
 class LocationUpdateView(LoginRequiredMixin,UpdateView):
     model, template_name = getModelTemplate(Location, 'location_update')
-    fields = locationFields
+    form_class = LocationForm
     success_url = getSuccessUrl()
+
+    def get_form_kwargs(self):
+        kwargs = super(LocationUpdateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 class LocationDeleteView(LoginRequiredMixin,DeleteView):
     model = Location

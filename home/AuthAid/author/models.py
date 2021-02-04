@@ -14,7 +14,7 @@ def search_ass(Target, **kwargs):
 '''Helper functions'''
 #Basic input Fields
 def charFieldsAndNotes():
-    nameTitle =  models.CharField(max_length=name_length, default='',blank=True)
+    nameTitle =  models.CharField(max_length=name_length, default='',blank=False)
     description = models.CharField(max_length=description_length, default='',blank=True)
     notes = notes_all
     return nameTitle,description,notes
@@ -48,6 +48,7 @@ class World(models.Model):
 
     def locations(self):
         return search_ass(Location,world=self)
+
 
 #An individual Narrative, i.e. a single novel, within the World.
 class NarrativeGeneralInfo(models.Model):
@@ -93,7 +94,7 @@ class Chapter(models.Model):
 
 class Scene(models.Model):
 
-    description = models.CharField(max_length=description_length, default='',blank=True)
+    description = models.CharField(max_length=description_length, default='',blank=False)
     notes = notes_all
     time_and_or_date = models.CharField(max_length=100, default='',blank=True)
 
@@ -134,7 +135,7 @@ class Character(models.Model):
 class Location(models.Model):
     name, description, notes = charFieldsAndNotes()
     world = world = setForeignKeysNullDelete(World)
-    ngi = models.ManyToManyField(NarrativeGeneralInfo)
+    ngi = models.ManyToManyField(NarrativeGeneralInfo, blank=True)
     scenes = models.ManyToManyField(Scene,blank=True)
     chapters = models.ManyToManyField(Chapter,blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='location', null=True)
