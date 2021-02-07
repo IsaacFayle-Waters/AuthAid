@@ -1,4 +1,4 @@
-* {box-sizing: border-box; border-radius: 25px}
+* {box-sizing: border-box; border-radius: 25px; padding: 4px}
 
 body {font-family: arial; padding:10px; background: Azure;}
 a:link,a:visited {text-decoration: none; color:#2F4F4F;}
@@ -22,7 +22,11 @@ a:link,a:visited {text-decoration: none; color:#2F4F4F;}
 .topnav a:hover {
   background-color: #ddd;
   color: black;
+  border-radius: 0px 25px 10px 0px;
  }
+
+.generalBlurb {font-family:arial; color:#2F4F4F; text-align:left; font-size: 23px ;background: Azure; display:block; padding:20px;}
+
 
 /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
 @media screen and (max-width: 400px) {

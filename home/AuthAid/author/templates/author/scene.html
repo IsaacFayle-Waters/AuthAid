@@ -10,7 +10,7 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'author/nonbasestyle.css' %}">
 <div class="sidebar">
-    <h4><a href="{% url 'author:scene_create'%}">+Create New</a> </h4>
+    <h4><a href="{% url 'author:scene_create'%}">+Create New Scene</a> </h4>
     </div>
 {%if scene_list%}
     {%for scene in scene_list%}

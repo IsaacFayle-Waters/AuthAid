@@ -73,7 +73,6 @@ class WorldCreateView(LoginRequiredMixin,CreateView):
     def form_valid(self, form):
         user = self.request.user
         form.instance.user = user
-
         return super(WorldCreateView,self).form_valid(form)
 
 class WorldUpdateView(LoginRequiredMixin,UpdateView):

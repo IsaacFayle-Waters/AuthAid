@@ -11,7 +11,7 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'author/nonbasestyle.css' %}">
     <div class="sidebar">
-    <h4><a href="{% url 'author:world_create'%}">+Create New</a> </h4>
+    <h4><a href="{% url 'author:world_create'%}">+Create New World</a> </h4>
     </div>
     {% if world_list %}
             {% for world in world_list %}

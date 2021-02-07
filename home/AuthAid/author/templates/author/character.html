@@ -10,7 +10,7 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'author/nonbasestyle.css' %}">
 <div class="sidebar">
-    <h4><a href="{% url 'author:character_create'%}">+Create New</a> </h4>
+    <h4><a href="{% url 'author:character_create'%}">+Create New Character</a> </h4>
     </div>
     {% if character_list %}
         {% for character in character_list %}

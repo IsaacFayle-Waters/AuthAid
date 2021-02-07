@@ -5,8 +5,7 @@ name_length = 500
 description_length = 2000
 notes_all = models.TextField(default='',blank=True)
 
-
-#Search for assignments of an instance of a class in instances of other classes.
+'''Search for assignments of an instance of a class in instances of other classes.'''
 #EXAMPLE OF USAGE:#w = World.objects.get(pk=1), #search_ass(NarrativeGeneralInfo,world=w.id)
 def search_ass(Target, **kwargs):
     return Target.objects.filter(**kwargs)
@@ -18,9 +17,11 @@ def charFieldsAndNotes():
     description = models.CharField(max_length=description_length, default='',blank=True)
     notes = notes_all
     return nameTitle,description,notes
+
 #Return a foreign key with on_delete set to null. i.e. don't remove conected instances
 def setForeignKeysNullDelete(TargetClass):
     return models.ForeignKey(TargetClass,on_delete=models.SET_NULL, null=True,blank=True)
+
 #Return a foriegnkey that when deleted deletes conected instances.
 def setForeignKeysCascadeDelete(TargetClass):
     return models.ForeignKey(TargetClass,on_delete=models.CASCADE, null=True,blank=True)
@@ -48,7 +49,6 @@ class World(models.Model):
 
     def locations(self):
         return search_ass(Location,world=self)
-
 
 #An individual Narrative, i.e. a single novel, within the World.
 class NarrativeGeneralInfo(models.Model):
@@ -79,10 +79,11 @@ class Chapter(models.Model):
     #TODO: DECIDE HOW TO HANDLE CHAPTER NUMBERS
     chapter_number = models.IntegerField(default=0)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chapter', null=True)
-
     def __str__(self):
         return self.title
 
+
+    ''' 'Search For Self in' functions'''
     def scenes(self):
         return search_ass(Scene,chapter=self)
 
@@ -91,6 +92,16 @@ class Chapter(models.Model):
 
     def locations(self):
         return search_ass(Location,chapters=self)
+
+
+    '''Link Functions'''
+    '''
+    def linkWithWorldThroughNgi(self,ngi):
+        if self.ngi:
+            self.world = self.ngi.world
+        else:
+            pass
+    '''
 
 class Scene(models.Model):
 
